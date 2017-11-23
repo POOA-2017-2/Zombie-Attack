@@ -14,6 +14,7 @@ public class Game implements Runnable {
 	private Graphics g;
 	private Escenario escenario;
 	private Jugador jugador;
+	private Enemigo enemigo;
 	
 	public Game(int ancho, int alto, String titulo) {
 		super();
@@ -25,6 +26,7 @@ public class Game implements Runnable {
 	public void init(){
 		escenario = new Escenario();
 		jugador = new Jugador(0,160);
+		enemigo=new Enemigo();
 		ventana = new Display(ancho, alto, titulo, jugador);
 		ventana.getCanvas().setFocusable(true);
 	}
@@ -54,6 +56,7 @@ public class Game implements Runnable {
 	public void update(){
 		escenario.update();
 		jugador.update();
+		enemigo.update();
 		
 	}
 	
@@ -70,11 +73,12 @@ public class Game implements Runnable {
 		
 		escenario.render(g);
 		jugador.render(g);
+		enemigo.render(g);
 		
 		//FIN DEL PINTADO
 		
 		bs.show();
-		g.dispose();
+		//g.dispose();
 	}
 	
 	
