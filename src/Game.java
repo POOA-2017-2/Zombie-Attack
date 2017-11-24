@@ -13,7 +13,7 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private Escenario escenario;
-	private Jugador jugador;
+	public static Jugador jugador;
 	private Enemigo enemigo;
 	
 	public Game(int ancho, int alto, String titulo) {
