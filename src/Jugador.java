@@ -8,6 +8,9 @@ public class Jugador implements Runnable{
 	private int y;
 	private int dx;
 	private int dy;
+	private int ancho;
+	private int alto;
+	private BarraVida barraVida;
 	private SpriteManager sm;
 	private BufferedImage imagen;
 	private volatile boolean moveLeft;
@@ -28,8 +31,9 @@ public class Jugador implements Runnable{
 		moveRight = false;
 		moveUp = false;
 		moveDown = false;
-		sm = new SpriteManager("/imagenes/soldierSpray.png");
+		sm = new SpriteManager("/imagenes/soldierSpriteSheet.png");
 		imagen = sm.subImage(1, 1, 79, 53);
+		barraVida = new BarraVida(79,this);
 		cont = 79;
 		i = 0;
 		Thread t = new Thread(this);
@@ -41,6 +45,7 @@ public class Jugador implements Runnable{
 	public void render(Graphics g){
 		
 		g.drawImage(imagen, x, y, null);
+		barraVida.render(g);
 		
 	}
 	
@@ -58,6 +63,8 @@ public class Jugador implements Runnable{
 		if(moveLeft){
 			x -= dx;
 		}
+		
+		barraVida.update();
 		
 	}
 	
@@ -155,6 +162,24 @@ public class Jugador implements Runnable{
 	public void setMoveDown(boolean moveDown) {
 		this.moveDown = moveDown;
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	
 	
 	
 
