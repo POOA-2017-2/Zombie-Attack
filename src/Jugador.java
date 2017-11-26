@@ -8,6 +8,7 @@ public class Jugador implements Runnable{
 	private int y;
 	private int dx;
 	private int dy;
+	private BarraVida barraVida;
 	private volatile boolean moveLeft;
 	private volatile boolean moveRight;
 	private volatile boolean moveUp;
@@ -25,6 +26,7 @@ public class Jugador implements Runnable{
 		moveRight = false;
 		moveUp = false;
 		moveDown = false;
+		barraVida = new BarraVida(79,this);
 		anima =new Animacion();
 		Thread t = new Thread(this);
 		t.start();
@@ -35,6 +37,7 @@ public class Jugador implements Runnable{
 	public void render(Graphics g){
 		
 		g.drawImage(anima.imagen, x, y, null);
+		barraVida.render(g);
 		
 	}
 	
@@ -52,6 +55,8 @@ public class Jugador implements Runnable{
 		if(moveLeft){
 			x -= dx;
 		}
+		
+		barraVida.update();
 		
 	}
 	
