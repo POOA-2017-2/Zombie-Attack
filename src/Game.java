@@ -13,8 +13,9 @@ public class Game implements Runnable {
 	private BufferStrategy bs;
 	private Graphics g;
 	private Escenario escenario;
-	public static Jugador jugador;
+	private Jugador jugador;
 	private Enemigo enemigo;
+	private EnemigoPrueba enemy;
 	
 	public Game(int ancho, int alto, String titulo) {
 		super();
@@ -26,7 +27,8 @@ public class Game implements Runnable {
 	public void init(){
 		escenario = new Escenario();
 		jugador = new Jugador(0,160);
-		enemigo=new Enemigo();
+		enemigo=new Enemigo(jugador);
+		enemy = new EnemigoPrueba(400,100, jugador);
 		ventana = new Display(ancho, alto, titulo, jugador);
 		ventana.getCanvas().setFocusable(true);
 	}
@@ -57,6 +59,7 @@ public class Game implements Runnable {
 		escenario.update();
 		jugador.update();
 		enemigo.update();
+		enemy.update();
 		
 	}
 	
@@ -74,6 +77,7 @@ public class Game implements Runnable {
 		escenario.render(g);
 		jugador.render(g);
 		enemigo.render(g);
+		enemy.render(g);
 		
 		//FIN DEL PINTADO
 		

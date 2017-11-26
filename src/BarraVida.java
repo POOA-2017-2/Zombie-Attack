@@ -10,13 +10,21 @@ public class BarraVida {
 	private int alto;
 	private int salud;
 	private Jugador jugador;
+	private EnemigoPrueba enemigo;
 	
 	public BarraVida(int salud, Jugador jugador){
 		this.salud = salud;
 		this.jugador = jugador;
 		x  = jugador.getX();
 		y = jugador.getY() - 20;
-		salud = 79;
+		alto = 20;
+	}
+	
+	public BarraVida(int salud, EnemigoPrueba enemigo){
+		this.salud = salud;
+		this.enemigo = enemigo;
+		x = enemigo.getX();
+		y = enemigo.getY() - 20;
 		alto = 20;
 	}
 	
@@ -26,8 +34,15 @@ public class BarraVida {
 	}
 	
 	public void update(){
+		if(enemigo == null){
 		x = jugador.getX();
 		y = jugador.getY() - 20;
+		}
+		if(jugador == null){
+			x=  enemigo.getX();
+			y = enemigo.getY() - 20;
+		}
+			
 	}
 
 }

@@ -19,8 +19,11 @@ public class Enemigo extends JPanel implements Runnable {
 	private int moverY;
 	private int diffX;
 	private int diffY;
+	private Jugador jugador;
 	
-	public Enemigo() {
+	
+	public Enemigo(Jugador jugador) {
+		this.jugador = jugador;
 		hilo = new Thread(this);
 		hilo.start();
 	}
@@ -69,8 +72,8 @@ public class Enemigo extends JPanel implements Runnable {
 
 	public void update() {
 		
-		moverX = Game.jugador.getX(); // Guarda la posicion en X del jugador
-		moverY = Game.jugador.getY(); // Guarda la posicion en Y del jugador
+		moverX = jugador.getX(); // Guarda la posicion en X del jugador
+		moverY = jugador.getY(); // Guarda la posicion en Y del jugador
 		
 		diffX = moverX - x1; //Calcula la distancia entre la posicion X del enemigo respecto a la del jugador
 		diffY = moverY - y1; //Calcula la distancia entre la posicion Y del enemigo respecto a la del jugador
@@ -89,7 +92,7 @@ public class Enemigo extends JPanel implements Runnable {
 		else if (angulo>=0){
 			 x1-= -vel * Math.cos(angulo); //"x" solo puede ir hacia la izquierda esto es debido a que depende de una "y" positiva lo cual 
 			                               //trigonometricamente ocaciona que su valor siempre sea positivo es por eso que negamos el resultado  
-			 y1=Game.jugador.getY()-vel;   //Si el enemigo esta en la misma posicion que el jugador en "y" pero no en "X" copia sus movimientos  
+			 y1=jugador.getY()-vel;   //Si el enemigo esta en la misma posicion que el jugador en "y" pero no en "X" copia sus movimientos  
 		 }
 		//System.out.println(angulo);
 		x+=dx ;

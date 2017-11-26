@@ -8,13 +8,15 @@ public class Jugador implements Runnable{
 	private int y;
 	private int dx;
 	private int dy;
+	private SpriteManager sm;
+	private BufferedImage image;
 	private BarraVida barraVida;
 	private volatile boolean moveLeft;
 	private volatile boolean moveRight;
 	private volatile boolean moveUp;
 	private volatile boolean moveDown;
 	private boolean noMovement;
-	private Animacion anima;
+	private Animacion animacion;
 
 	public Jugador(int x, int y){
 		
@@ -26,8 +28,10 @@ public class Jugador implements Runnable{
 		moveRight = false;
 		moveUp = false;
 		moveDown = false;
+		sm = new SpriteManager("/imagenes/soldierSpray.png");
+		image = sm.subImage(1, 1, 79, 53);
 		barraVida = new BarraVida(79,this);
-		anima =new Animacion();
+		animacion =new Animacion(this);
 		Thread t = new Thread(this);
 		t.start();
 		//imagen = ImageManager.cargarImagen("/imagenes/soldier.jpg");
@@ -36,7 +40,7 @@ public class Jugador implements Runnable{
 	
 	public void render(Graphics g){
 		
-		g.drawImage(anima.imagen, x, y, null);
+		g.drawImage(image, x, y, null);
 		barraVida.render(g);
 		
 	}
@@ -65,19 +69,19 @@ public class Jugador implements Runnable{
 		while(true){
 			
 		    while(moveUp){
-		    	anima.playerUp();
+		    	animacion.playerUp();
 		    }
 		
 		    while(moveDown){
-		    	anima.playerDown();
+		    	animacion.playerDown();
 		    }
 		
 		    while(moveRight){
-		    	anima.playerRight();
+		    	animacion.playerRight();
 		    }
 		
 		    while(moveLeft){
-		    	anima.playerLeft();
+		    	animacion.playerLeft();
 		    }
 		}
 	}
@@ -121,6 +125,24 @@ public class Jugador implements Runnable{
 	public int getY() {
 		return y;
 	}
+	
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	public SpriteManager getSm() {
+		return sm;
+	}
+
+	public void setSm(SpriteManager sm) {
+		this.sm = sm;
+	}
+	
+	
 
 }
 
