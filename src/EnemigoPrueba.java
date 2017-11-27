@@ -3,14 +3,10 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-public class EnemigoPrueba {
+public class EnemigoPrueba extends Entidad {
 	
-	private int x;
-	private int y;
 	private int dx;
 	private int dy;
-	private BufferedImage image;
-	private BarraVida barraVida;
 	private Jugador jugador;
 	
 	

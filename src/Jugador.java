@@ -2,15 +2,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 
-public class Jugador implements Runnable{
+public class Jugador extends Entidad implements Runnable{
 	
-	private int x;
-	private int y;
 	private int dx;
 	private int dy;
-	private SpriteManager sm;
-	private BufferedImage image;
-	private BarraVida barraVida;
 	private volatile boolean moveLeft;
 	private volatile boolean moveRight;
 	private volatile boolean moveUp;
@@ -30,7 +25,7 @@ public class Jugador implements Runnable{
 		moveDown = false;
 		sm = new SpriteManager("/imagenes/soldierSpray.png");
 		image = sm.subImage(1, 1, 79, 53);
-		barraVida = new BarraVida(79,this);
+		this.barraVida = new BarraVida(79,this);
 		animacion =new Animacion(this);
 		Thread t = new Thread(this);
 		t.start();
