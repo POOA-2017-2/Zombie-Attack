@@ -4,11 +4,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class EnemigoPrueba extends Entidad {
-	
+	private int x;
+	private int y;
 	private int dx;
 	private int dy;
+	private BufferedImage image;
+	private BarraVida barraVida;
 	private Jugador jugador;
-	
 	
 	public EnemigoPrueba(int x, int y, Jugador jugador){
 		this.x = x;
@@ -17,7 +19,7 @@ public class EnemigoPrueba extends Entidad {
 		dx = 1;
 		dy = 1;
 		image = ImageManager.cargarImagen("/imagenes/enemigo12.png");
-		barraVida = new BarraVida(79,this);
+		barraVida = new BarraVida(79, this);
 	}
 	
 	public void render(Graphics g){

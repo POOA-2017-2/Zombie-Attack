@@ -1,4 +1,5 @@
 import java.awt.Canvas;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -8,6 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Color;
+import java.awt.Font;
 
 public class Display extends JFrame {
 
@@ -15,8 +20,7 @@ public class Display extends JFrame {
 	private int ancho;
 	private String titulo;
 	private Canvas canvas;
-	private JButton up, down, left, right;
-
+	private JButton up, down, left, right, disparar;
 	private Jugador jugador;
 
 	public Display(int ancho, int alto, String titulo, Jugador jugador) {
@@ -91,6 +95,22 @@ public class Display extends JFrame {
 			}
 		});
 		getContentPane().add(right);
+
+		disparar = new JButton(" D");// boton para disparar
+		disparar.setFont(new Font("Tahoma", Font.BOLD, 12));
+		disparar.setBackground(Color.ORANGE);
+		disparar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int tecla = e.getKeyCode();
+				if (tecla == KeyEvent.VK_D) {
+					System.out.println("tecla activada");
+					jugador.Disparar();
+				}
+			}
+		});
+		disparar.setBounds(200, 430, 50, 50);
+		getContentPane().add(disparar);
 
 		canvas = new Canvas();
 		canvas.setSize(ancho, alto);
