@@ -97,7 +97,7 @@ public class Enemigo extends JPanel implements Runnable {
 		//System.out.println(angulo);
 		x+=dx ;
 		//System.out.println("valor"+dx+x);
-		
+                System.out.println("Esto es una prueba ok");	
 	}
 
 }// FIN DE LA CLASE ENEMIGO
