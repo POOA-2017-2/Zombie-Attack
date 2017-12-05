@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -6,22 +8,26 @@ import javax.swing.DefaultListModel;
 
 public class Jugador implements Runnable {
 
+	
 	private int x;
 	private int y;
 	private int dx;
 	private int dy;
+	private int HEIGHT = 53;//ancho de la Imagen del Jugador
+	private int WIDTH = 78;//largo de la Imagen del Jugador
 	private SpriteManager sm;
 	private BufferedImage image;
-	private BarraVida barraVida;
+	public BarraVida barraVida;
 	private volatile boolean moveLeft;
 	private volatile boolean moveRight;
 	private volatile boolean moveUp;
 	private volatile boolean moveDown;
 	private boolean noMovement;
 	private Animacion animacion;
-	private Bala bala;// objecto bala
-	// ArrayList bala= new ArrayList();//arraylist de objectos bala.
-	// ArrayList<Bala> balas = new ArrayList<Bala>();
+	private Bala balas;// objecto bala
+	//ArrayList<Bala> balas ;//array de objecto tipo bal
+	private Game game;
+
 
 	public Jugador(int x, int y) {
 
@@ -36,28 +42,25 @@ public class Jugador implements Runnable {
 		sm = new SpriteManager("/imagenes/soldierSpray.png");
 		image = sm.subImage(1, 1, 79, 53);
 		barraVida = new BarraVida(79, this);
-		bala = new Bala(false, this);//
+		//balas = new ArrayList<Bala>();
+		balas = new Bala(false, this);
 		animacion = new Animacion(this);
+		
 		Thread t = new Thread(this);
 		t.start();
-		// imagen = ImageManager.cargarImagen("/imagenes/soldier.jpg");
-
 	}
 
 	public void render(Graphics g) {
-
 		g.drawImage(image, x, y, null);
 		barraVida.render(g);
-
-		if (bala.disparar == true) {
-			bala.render(g);
-		}
-
+			if (balas.disparo== true) {
+				balas.render(g);
+			}
 	}
 
 	public void update() {
 
-		if (moveUp) {
+		if (moveUp ) {
 			y -= dy;
 		}
 		if (moveDown) {
@@ -69,20 +72,21 @@ public class Jugador implements Runnable {
 		if (moveLeft) {
 			x -= dx;
 		}
-
+		
 		barraVida.update();
 
-		if (bala.disparar == true) {
-			bala.update();
+		if(balas.disparo == true){
+			 balas.update();
 		}
 
 	}
+
 
 	public void run() {
 
 		while (true) {
 
-			while (moveUp) {
+			while (moveUp ) {
 				animacion.playerUp();
 			}
 
@@ -156,20 +160,17 @@ public class Jugador implements Runnable {
 		this.sm = sm;
 	}
 
-	/*metodo disparar  solo se  activara cuando es precionado el boton D(disparar), mandara un true para
-	 * las condiciones en render,update , solo se pintara cuando este sea true.
+	/*metodo disparar  solo se  activara cuando es presionado el boton D(disparar), mandara un true para
+	 * las condiciones en render,update , solo se pintara cuando este sea true la variable disparo.
 	 * */
 	
-	public boolean Disparar() {
-		bala.disparar = true;
-		// System.out.println(bala.disparar);
-		return true;
+	public void Disparar() {
+		balas.disparo=true;
 	}
 
-	public void coordenadasInicial(int x, int y) {
-		x = this.getX() + 25;
-		y = this.getY() + 25;
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, WIDTH, HEIGHT);
 	}
-
-}
+	
+}//FIN DE LA CLASE jUGADOR
 

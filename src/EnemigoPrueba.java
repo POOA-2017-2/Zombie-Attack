@@ -1,15 +1,19 @@
 
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class EnemigoPrueba extends Entidad {
 	private int x;
 	private int y;
+	private int WIDTH = 24;//ancho de la imagen de Enemigo
+	private int HEIGHT = 45;//alto de la imagen de Enemigo
 	private int dx;
 	private int dy;
 	private BufferedImage image;
-	private BarraVida barraVida;
+	public BarraVida barraVida;
 	private Jugador jugador;
 	
 	public EnemigoPrueba(int x, int y, Jugador jugador){
@@ -37,11 +41,22 @@ public class EnemigoPrueba extends Entidad {
 			y += dy;
 		if(y > jugador.getY())
 			y -= dy;
-		
+		if (collision()){
+			System.out.println("estoy chocando con jugador.");//comprobacion de colision con el jugador
+			jugador.barraVida.vidaJugador();//se manda a llamar el metodo vidaJugador que restara -1 a Salud jugador
+		}
 		barraVida.update();
-		
 	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, WIDTH, HEIGHT);
+	}
+	
+	private boolean collision() {
 
+		return jugador.getBounds().intersects(getBounds());
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -57,7 +72,4 @@ public class EnemigoPrueba extends Entidad {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	
-
 }

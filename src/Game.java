@@ -1,12 +1,14 @@
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import javax.swing.JOptionPane;
+
 
 public class Game implements Runnable {
 	
 	private Display ventana;
-	private int ancho;
-	private int alto;
+	public int ancho;
+	public int alto;
 	private String titulo;
 	private boolean activo;
 	private Thread t;
@@ -79,6 +81,7 @@ public class Game implements Runnable {
 		enemigo.render(g);
 		enemy.render(g);
 		
+		
 		//FIN DEL PINTADO
 		
 		bs.show();
@@ -116,10 +119,30 @@ public class Game implements Runnable {
 				
 				System.out.println("Frames por segundo " + ticks);
 				ticks =0;
-				time  = 0;
-				
+				time  = 0;	
 			}
 		}
 	}
 
+	public void gameOver() {
+		//falta codigo
+	}
+
+	public int getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
+	}
+
+	public int getAlto() {
+		return alto;
+	}
+
+	public void setAlto(int alto) {
+		this.alto = alto;
+	}
+	
+	
 }

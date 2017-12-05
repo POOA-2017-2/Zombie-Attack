@@ -22,6 +22,7 @@ public class Display extends JFrame {
 	private Canvas canvas;
 	private JButton up, down, left, right, disparar;
 	private Jugador jugador;
+	private Bala bala;
 
 	public Display(int ancho, int alto, String titulo, Jugador jugador) {
 
