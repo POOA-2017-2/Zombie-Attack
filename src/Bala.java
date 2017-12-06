@@ -3,6 +3,78 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+public class Bala implements Runnable{
+	private int x;
+	private int y;
+	private int dx;
+	private boolean eliminarBala;
+	//private BufferedImage image;
+	private Entidad entidad;
+
+	// constructor
+	public Bala(Entidad entidad) {
+		this.entidad = entidad;
+		dx = 1;
+		x = entidad.getX() + 25;// posicion jugador centro en eje X
+		y = entidad.getY() + 25;// posicion jugador centro en eje Y
+		eliminarBala = false;
+		Thread t = new Thread(this);
+		t.start();
+		//image = ImageManager.cargarImagen("/imagenes/bala11.png");
+	}
+
+	// pinta
+	public void render(Graphics g) {
+		g.setColor(Color.RED);
+		if(eliminarBala == false)
+			g.fillRect(x, y, 5, 5);
+	}
+
+	public void update() {
+		x += dx;
+	}
+	
+	public boolean getEliminarBala(){
+		return eliminarBala;
+	}
+	
+	public void setEliminarBala(boolean eliminarBalas){
+		this.eliminarBala = eliminarBalas;
+	}
+	
+	public Rectangle getBounds(){
+		return new Rectangle(x,y,5,5);
+	}
+	
+	public void run(){
+		while(x < 480 && x > 0 && y > 0 && y < 480){
+			update();
+			try {
+				Thread.sleep(2);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(x < 1 || x > 478 || y > 478 || y < 1)
+				eliminarBala = true;
+		}
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+}// fin de la clase bala
+
+/*import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
 public class Bala {
 	private static final int HEIGHT = 17;
 	private static final int WIDTH = 26;
@@ -70,4 +142,4 @@ public class Bala {
 	}	
 	
 	
-}// fin de la clase bala
+}// fin de la clase bala*/

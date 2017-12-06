@@ -8,6 +8,50 @@ public class BarraVida {
 	private int y;
 	private int ancho;
 	private int alto;
+	private int salud;
+	private Jugador jugador;
+	private EnemigoPrueba enemigo;
+	private Entidad entidad;
+	
+	public BarraVida(Entidad entidad){
+		ancho = entidad.getSalud();
+		alto = 10;
+		this.entidad = entidad;
+		x = entidad.getX();
+		y = entidad.getY();
+		
+	}
+
+	public void render(Graphics g){
+		g.setColor(Color.RED);
+		g.fillRect(x, y, ancho, alto);
+	}
+	
+	public void update(){
+		x = entidad.getX();
+		y = entidad.getY() - 20;
+	}
+
+	public int getAncho() {
+		return ancho;
+	}
+
+	public void setAncho(int ancho) {
+		this.ancho = ancho;
+	}
+
+}
+
+/*import java.awt.Color;
+import java.awt.Graphics;
+
+
+public class BarraVida {
+	
+	private int x;
+	private int y;
+	private int ancho;
+	private int alto;
 	private int saludJugador = 100;	//100 puntos de vida
 	private int saludEnemigo = 90;
 	private Jugador jugador;
@@ -71,4 +115,4 @@ public class BarraVida {
 	}
 
 
-}
+}*/
