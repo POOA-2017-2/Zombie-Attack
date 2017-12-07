@@ -12,6 +12,7 @@ public class BarraVida {
 	private Jugador jugador;
 	private EnemigoPrueba enemigo;
 	private Entidad entidad;
+	protected Color color;
 	
 	public BarraVida(Entidad entidad){
 		ancho = entidad.getSalud();
@@ -23,7 +24,7 @@ public class BarraVida {
 	}
 
 	public void render(Graphics g){
-		g.setColor(Color.RED);
+		g.setColor(color);//Color.RED
 		g.fillRect(x, y, ancho, alto);
 	}
 	

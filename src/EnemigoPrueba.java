@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -5,6 +6,7 @@ public class EnemigoPrueba extends Entidad {
 	
 	
 	private Jugador jugador;
+	protected Color color;
 	
 	public EnemigoPrueba(int x, int y, Jugador jugador){
 		this.x = (int) (x + (Math.random() * 100));
@@ -20,6 +22,7 @@ public class EnemigoPrueba extends Entidad {
 	}
 	
 	public void render(Graphics g){
+		g.setColor(color.RED);
 		g.drawImage(image, x, y, null);
 		barraVida.render(g);
 	}

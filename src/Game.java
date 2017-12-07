@@ -21,7 +21,7 @@ public class Game implements Runnable {
 	private Graphics g;
 	private Escenario escenario;
 	private Jugador jugador;
-	private static ArrayList <EnemigoPrueba> enemigos;
+	private ArrayList <EnemigoPrueba> enemigos;
 	//private Iterator<EnemigoPrueba> it;
 	//private EnemigoPrueba enemy;
 	//private boolean update = true;
@@ -90,7 +90,28 @@ public class Game implements Runnable {
 				jugador.getBarraVida().setAncho(jugador.getBarraVida().getAncho() - 10);
 		    }
 		}
+		
 		comprobarEnemigos();
+		
+		for(int i=0;i<jugador.getBalas().size();i++){
+			Bala item=jugador.getBalas().get(i);
+			item.update(); 
+			if(jugador.isaddBala()){//if(item.getX()<0 || item.getX()>500){
+				jugador.getBalas().remove(item);
+			}
+			
+            for(int j=0;j<getEnemigos().size();j++){
+				EnemigoPrueba enemigo=getEnemigos().get(j); 
+				if (item.getBounds().intersects(enemigo.getBounds())){  
+					enemigo.getBarraVida().setAncho(enemigo.getBarraVida().getAncho() - 10);
+					if(enemigo.getBarraVida().getAncho()<=0){
+					   getEnemigos().remove(enemigo); 
+					}
+					jugador.getBalas().remove(item);
+				}
+				
+			}
+		}
 		//it = enemigos.iterator();
 		//while(it.hasNext() && update)
 			//it.next().update();	
@@ -196,7 +217,7 @@ public class Game implements Runnable {
 		}
 	}
 	
-	public static ArrayList<EnemigoPrueba> getEnemigos() {
+	public ArrayList<EnemigoPrueba> getEnemigos() {
 		return enemigos;
 	}
 
