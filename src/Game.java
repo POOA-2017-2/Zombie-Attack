@@ -15,13 +15,13 @@ public class Game implements Runnable {
 	private int alto;
 	private String titulo;
 	private boolean activo;
-	//private Timer te;
 	private Thread t;
 	private BufferStrategy bs;
 	private Graphics g;
 	private Escenario escenario;
 	private Jugador jugador;
 	private ArrayList <EnemigoPrueba> enemigos;
+	private Marcador marcador;
 	//private Iterator<EnemigoPrueba> it;
 	//private EnemigoPrueba enemy;
 	//private boolean update = true;
@@ -38,6 +38,7 @@ public class Game implements Runnable {
 		
 		//it = enemigos.iterator();
 		escenario = new Escenario();
+		marcador = new Marcador(0,"PUNTUAJE: ");
 		jugador = new Jugador(0,160);
 		enemigos = new ArrayList<EnemigoPrueba>();
 		enemigos.add(new EnemigoPrueba(250, 160, jugador));
@@ -98,11 +99,13 @@ public class Game implements Runnable {
 			item.update(); 
 			if(jugador.isaddBala()){//if(item.getX()<0 || item.getX()>500){
 				jugador.getBalas().remove(item);
+	
 			}
 			
             for(int j=0;j<getEnemigos().size();j++){
 				EnemigoPrueba enemigo=getEnemigos().get(j); 
 				if (item.getBounds().intersects(enemigo.getBounds())){  
+					marcador.update();// puntuaje
 					enemigo.getBarraVida().setAncho(enemigo.getBarraVida().getAncho() - 10);
 					if(enemigo.getBarraVida().getAncho()<=0){
 					   getEnemigos().remove(enemigo); 
@@ -163,7 +166,9 @@ public class Game implements Runnable {
 		// PINTAR ELEMENTOS
 		
 		escenario.render(g);
+		marcador.render(g);
 		jugador.render(g);
+		
 		//enemy.render(g);
 		for(int i=0; i<enemigos.size();i++){
 			enemigos.get(i).render(g);
