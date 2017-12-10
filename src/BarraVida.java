@@ -8,9 +8,6 @@ public class BarraVida {
 	private int y;
 	private int ancho;
 	private int alto;
-	private int salud;
-	private Jugador jugador;
-	private EnemigoPrueba enemigo;
 	private Entidad entidad;
 	protected Color color;
 	
@@ -18,6 +15,7 @@ public class BarraVida {
 		ancho = entidad.getSalud();
 		alto = 10;
 		this.entidad = entidad;
+		color = entidad.getColor();
 		x = entidad.getX();
 		y = entidad.getY();
 		

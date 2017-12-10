@@ -20,11 +20,11 @@ public class Game implements Runnable {
 	private Graphics g;
 	private Escenario escenario;
 	private Jugador jugador;
-	private ArrayList <EnemigoPrueba> enemigos;
+	private ArrayList <Enemigo> enemigos;
 	private Marcador marcador;
-	//private Iterator<EnemigoPrueba> it;
-	//private EnemigoPrueba enemy;
-	//private boolean update = true;
+	private boolean addBoss;
+	private EnemigoBoss boss;
+
 
 	
 	public Game(int ancho, int alto, String titulo) {
@@ -35,23 +35,12 @@ public class Game implements Runnable {
 	}
 	
 	public void init(){
-		
-		//it = enemigos.iterator();
 		escenario = new Escenario();
 		marcador = new Marcador(0,"PUNTUAJE: ");
 		jugador = new Jugador(0,160);
-		enemigos = new ArrayList<EnemigoPrueba>();
-		enemigos.add(new EnemigoPrueba(250, 160, jugador));
-	//	enemigos.add(new EnemigoPrueba(300, 160, jugador));
-	//	enemigos.add(new EnemigoPrueba(350, 160, jugador));
-	//	te=new Timer(10000, new ActionListener() {
-		//	public void actionPerformed(ActionEvent e) {
-	//			enemigos.add(new EnemigoPrueba(300, 160, jugador));
-	//		}
-	//	});
-		
-	//	te.start();
-	//	enemy = new EnemigoPrueba(400,100, jugador);
+		addBoss = false;
+		enemigos = new ArrayList<Enemigo>();
+		enemigos.add(new EnemigoLvl1());
 		ventana = new Display(ancho, alto, titulo, jugador);
 		ventana.getCanvas().setFocusable(true);
 	}
@@ -81,10 +70,19 @@ public class Game implements Runnable {
 	public void update(){
 		escenario.update();
 		jugador.update();
-	  //enemy.update();
-	  //colision();
+		if(marcador.getC() == 10 && addBoss == false){
+			addBoss = true;
+		}
+		
+		if(addBoss){
+			boss = new EnemigoBoss(jugador);
+			enemigos.add(boss);
+			addBoss = false;
+		}
+		
+		//Revisa la colision entre el jugador y el enemigo
 		for(int i=0; i<enemigos.size();i++){
-			EnemigoPrueba e=enemigos.get(i);
+			Enemigo e=enemigos.get(i);
 			e.update();
 			if(jugador.getBounds().intersects(e.getBounds())){
 				enemigos.remove(i);
@@ -92,6 +90,24 @@ public class Game implements Runnable {
 		    }
 		}
 		
+		if(enemigos.contains(boss)){
+			for(int i = 0; i < boss.getMisiles().size(); i++){
+				Misil item = boss.getMisiles().get(i);
+				if(item.getBounds().intersects(jugador.getBounds())){
+					item.setEliminarMisil(true);
+					jugador.getBarraVida().setAncho(jugador.getBarraVida().getAncho() - 30);
+				}
+			}
+		}
+		
+		//Revisa si el enemigo ha salido de la pantalla
+		for(int i = 0; i < enemigos.size(); i++){
+			Enemigo e = enemigos.get(i);
+			if(e.getX() < 0)
+				enemigos.remove(i);
+		}
+		
+		//Comprueba si 
 		comprobarEnemigos();
 		
 		for(int i=0;i<jugador.getBalas().size();i++){
@@ -99,14 +115,13 @@ public class Game implements Runnable {
 			item.update(); 
 			if(jugador.isaddBala()){//if(item.getX()<0 || item.getX()>500){
 				jugador.getBalas().remove(item);
-	
 			}
 			
             for(int j=0;j<getEnemigos().size();j++){
-				EnemigoPrueba enemigo=getEnemigos().get(j); 
+				Enemigo enemigo=getEnemigos().get(j); 
 				if (item.getBounds().intersects(enemigo.getBounds())){  
 					marcador.update();// puntuaje
-					enemigo.getBarraVida().setAncho(enemigo.getBarraVida().getAncho() - 10);
+					enemigo.getBarraVida().setAncho(enemigo.getBarraVida().getAncho() - (10-enemigo.getDefensa()));
 					if(enemigo.getBarraVida().getAncho()<=0){
 					   getEnemigos().remove(enemigo); 
 					}
@@ -115,43 +130,13 @@ public class Game implements Runnable {
 				
 			}
 		}
-		//it = enemigos.iterator();
-		//while(it.hasNext() && update)
-			//it.next().update();	
-	}
-	
-	public void colision(){
-		/*it = enemigos.iterator();
-		while(it.hasNext()){
-			if(jugador.getBounds().intersects(it.next().getBounds()))
-				//System.out.println("Hubo colision");
-				enemigos.remove(it.next());
-		}*/
-		
-	    //if(jugador.getBounds().intersects(enemy.getBounds())){
-		//	enemy = null;
-		//	System.out.println("Colision");
-		//	jugador.getBarraVida().setAncho(jugador.getBarraVida().getAncho() - 10);
-		//}
-			
 	}
 	
 	public void comprobarEnemigos(){
-		/*System.out.println(enemigos.size());
-		if(enemigos.size() < 3){
-			enemigos.add(new EnemigoPrueba(400,100,jugador));
-			System.out.println("Enemigo anadido");
-		}*/
-		
-			if(enemigos.size() < 3){
-				enemigos.add(new EnemigoPrueba(400,100,jugador));
-				System.out.println("Enemigo anadido");
-			}
-			
-		//}
-		
-		//if (enemy == null)
-		//	enemy = new EnemigoPrueba(400,100,jugador);
+		if(enemigos.size() < 3 && enemigos.contains(boss) == false){
+				enemigos.add(new EnemigoLvl1());
+				System.out.println("Enemigo lvl 1 anadido");
+		}
 	}
 	
 	public void render(){
@@ -222,7 +207,7 @@ public class Game implements Runnable {
 		}
 	}
 	
-	public ArrayList<EnemigoPrueba> getEnemigos() {
+	public ArrayList<Enemigo> getEnemigos() {
 		return enemigos;
 	}
 

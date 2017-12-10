@@ -16,7 +16,6 @@ public class Jugador extends Entidad implements Runnable {
 	private Animacion animacion;
 	private ArrayList <Bala> balas;
 	private boolean addBala;
-	protected Color color;
 	
 
 	public Jugador(int x, int y) {
@@ -33,6 +32,7 @@ public class Jugador extends Entidad implements Runnable {
 		moveRight = false;
 		moveUp = false;
 		moveDown = false;
+		color = Color.blue;
 		sm = new SpriteManager("/imagenes/soldierSpray.png");
 		image = sm.subImage(1, 1, ancho, alto);
 		barraVida = new BarraVida(this);//this
@@ -46,15 +46,14 @@ public class Jugador extends Entidad implements Runnable {
 	}
 
 	public void render(Graphics g) {
-        g.setColor(color.BLUE);
 		g.drawImage(image, x, y, null);
 		barraVida.render(g);
 		for(int i=0;i<balas.size();i++){
 			Bala item= balas.get(i);
 			item.render(g); 
-			if(addBala){//if(item.getX()<0 || item.getX()>500){
-				balas.remove(item);
-			}
+			//if(addBala){//if(item.getX()<0 || item.getX()>500){
+				//balas.remove(item);
+			//}
 		}
 		/*while(it.hasNext() && addBala == false){
 			it.next().render(g);
@@ -78,6 +77,12 @@ public class Jugador extends Entidad implements Runnable {
 		}
 
 		barraVida.update();
+		
+		for(int i = 0; i < balas.size(); i++){
+			Bala item = balas.get(i);
+			if(item.getEliminarBala())
+				balas.remove(i);
+		}
 	}
 
 	public void run() {
@@ -136,9 +141,9 @@ public class Jugador extends Entidad implements Runnable {
 	}
 	
 	public void addBala(){
-		addBala = true;
+		//addBala = true;
 		balas.add(new Bala(this));
-		addBala = false;
+		//addBala = false;
 		//it = balas.iterator();
 	}
 	

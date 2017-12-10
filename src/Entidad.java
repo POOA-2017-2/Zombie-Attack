@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -13,9 +14,11 @@ public class Entidad {
 	protected int dy;
 	protected int ancho;
 	protected int alto;
+	protected int defensa;
 	protected BufferedImage image;
 	protected SpriteManager sm;
 	protected BarraVida barraVida;
+	protected Color color;
 	
 	public int getSalud() {
 		return salud;
@@ -112,6 +115,23 @@ public class Entidad {
 	public Rectangle getBounds(){
 		return new Rectangle(x,y,ancho,alto);
 	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public int getDefensa() {
+		return defensa;
+	}
+
+	public void setDefensa(int defensa) {
+		this.defensa = defensa;
+	}
+	
 	
 	
 
